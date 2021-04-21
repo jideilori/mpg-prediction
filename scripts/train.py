@@ -103,6 +103,9 @@ def display_scores(scores):
     print("Standard deviation:", scores.std())
 
 def preprocess_origin_cols(df):
+    if df['Origin'].nunique() > 3:
+        raise AssertionError('Value more than 3')
+        return
     df["Origin"] = df["Origin"].map({1: "India", 2: "USA", 3: "Germany"})    
     return df
 

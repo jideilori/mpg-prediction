@@ -1,6 +1,6 @@
-from scripts.train import load_data,get_feat_labels
+from scripts.train import load_data,get_feat_labels,preprocess_origin_cols
 from scripts.train import strat_split
-
+import pandas as pd
 import pytest
 
 data =  load_data('./data/raw/auto-mpg.data')
@@ -14,6 +14,29 @@ def test_strat_split():
 
 def test_get_feat_labels():
     assert get_feat_labels(data, 'MPG')
+
+def test_preprocess_origin_cols():
+    actual = pd.DataFrame({'Origin': [1]})
+    expected = pd.DataFrame({'Origin': ['India', 'USA','Germany']})    
+    assert all(preprocess_origin_cols(actual) ==  expected)
+
+# def test_preprocess_origin_cols():
+#     actual = pd.DataFrame({'Origin': [1, 2,3]})
+#     expected = pd.DataFrame({'Origin': ['India', 'USA','Germany']})    
+#     assert all(preprocess_origin_cols(actual) ==  expected)
+
+# def test_preprocess_origin_cols_no_of_unique_values():
+#     actual = pd.DataFrame({'Origin': [1,2,3,4]})
+#     actual_len = actual['Origin'].nunique()
+#     expected = preprocess_origin_cols(actual)
+#     expected_len = acc['Origin'].nunique()
+#     # with pytest.raises(AssertionError):
+#     assert actual_len == expected_len
+
+
+    # expected = pd.DataFrame({'Origin': ['India', 'USA','Germany','five']})
+    # with pytest.raises(ValueError):
+
 
 # @pytest.mark.parametrize("test_size",[0.2,-0.2,0.5,-0.5])
 # def test_strat_split(test_size):
