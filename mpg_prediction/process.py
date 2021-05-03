@@ -1,16 +1,15 @@
+import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.compose import ColumnTransformer
-from train import acc_ix,hpower_ix,cyl_ix
-
+import numpy as np
 
 class CustomAttrAdder(BaseEstimator, TransformerMixin):
     def __init__(self, acc_on_power=True):
         self.acc_on_power = acc_on_power  
-    
+
     def fit(self, x_data, y=None):
         return self  
     
@@ -21,7 +20,7 @@ class CustomAttrAdder(BaseEstimator, TransformerMixin):
             return np.c_[x_data, acc_on_power, acc_on_cyl] 
         else:
             return np.c_[x_data,acc_on_cyl]
-            
+
 def num_pipeline_transformer(data):
     '''
     Function to process numerical transformations
@@ -62,7 +61,29 @@ def pipeline_transformer(data):
     prepared_data = full_pipeline.fit_transform(data)
     return prepared_data
 
-# def preprocess_origin_cols(df):
-#     df["Origin"] = df["Origin"].map({1: "India", 2: "USA", 3: "Germany"})    
-#     return df
+def preprocess_origin_cols(df):
+    if df['Origin'].nunique() > 3:
+        raise AssertionError('Value more than 3')
+        return
+    df["Origin"] = df["Origin"].map({1: "India", 2: "USA", 3: "Germany"})    
+    return df
+
+def get_idx(df):
+    '''
+    Get column index num of acc, hp and cylinders
+    '''
+    global acc_ix,hpower_ix,cyl_ix
+    acc_ix=df.columns.get_loc('Acceleration')
+    hpower_ix=df.columns.get_loc('Horsepower')
+    cyl_ix=df.columns.get_loc('Cylinders')
+    return acc_ix,hpower_ix,cyl_ix
+
+def dict_to_df(dict_data):
+    '''
+    Convert dictionary to dataframe
+    '''
+    df = pd.DataFrame(dict_data)
+    get_idx(df)
+    df = preprocess_origin_cols(df)
+    return df
 

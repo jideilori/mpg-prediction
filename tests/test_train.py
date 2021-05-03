@@ -15,10 +15,10 @@ def test_strat_split():
 def test_get_feat_labels():
     assert get_feat_labels(data, 'MPG')
 
-def test_preprocess_origin_cols():
-    actual = pd.DataFrame({'Origin': [1]})
-    expected = pd.DataFrame({'Origin': ['India', 'USA','Germany']})    
-    assert all(preprocess_origin_cols(actual) ==  expected)
+# def test_preprocess_origin_cols():
+#     actual = pd.DataFrame({'Origin': [1]})
+#     expected = pd.DataFrame({'Origin': ['India', 'USA','Germany']})    
+#     assert all(preprocess_origin_cols(actual) ==  expected)
 
 # def test_preprocess_origin_cols():
 #     actual = pd.DataFrame({'Origin': [1, 2,3]})
