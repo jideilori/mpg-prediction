@@ -4,8 +4,8 @@ from pydantic import BaseSettings
 from pydantic.main import BaseModel
 import joblib
 from typing import List
-from mpg_prediction.process import dict_to_df,pipeline_transformer
-
+from process import dict_to_df,pipeline_transformer
+import uvicorn
 # class Settings(BaseSettings):
 #     model_dir: str
 
@@ -59,9 +59,11 @@ async def predict_mpg(mpg: mpg_columns):
     data = mpg.dict()
     process= dict_to_df(data)
     prep_data = pipeline_transformer(process)
-    model = joblib.load('./mpg_prediction/model/rand_model.pkl')    
+    model = joblib.load('mpg_prediction/model/rand_model.pkl')    
     predictions = model.predict(prep_data)
     pred_list=list(predictions)
     # print(pred_list)
     return PredictResponse(data=pred_list)
     
+if __name__=="__main__":
+    uvicorn.run(app,host='0.0.0.0',port=8000)

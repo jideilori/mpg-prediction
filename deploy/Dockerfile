@@ -1,17 +1,15 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8 as base
+FROM python:3.8-slim
 
-ADD . ./mpg-prediction
+WORKDIR /mpg-prediction
 
-ADD requirements.txt ./mpg-prediction
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
-ENV PYTHONPATH $PYTHONPATH:./mpg-prediction
+COPY ./requirements.txt .
 
-WORKDIR ./mpg-prediction
+RUN pip install -r requirements.txt
 
-RUN pip3 install --no-cache-dir -r requirements.txt
+COPY ./mpg_prediction /mpg-prediction/mpg_prediction
 
-# COPY ./mpg_prediction /mpg_prediction
-
-# WORKDIR /mpg_prediction
-
-# RUN pip3 install --no-cache-dir -r requirements.txt
+CMD [ "python", "mpg_prediction/main.py"] 
+# CMD ["uvicorn","mpg_prediction.main:app","--reload"]
