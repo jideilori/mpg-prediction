@@ -14,36 +14,3 @@ def test_strat_split():
 
 def test_get_feat_labels():
     assert get_feat_labels(data, 'MPG')
-
-# def test_preprocess_origin_cols():
-#     actual = pd.DataFrame({'Origin': [1]})
-#     expected = pd.DataFrame({'Origin': ['India', 'USA','Germany']})    
-#     assert all(preprocess_origin_cols(actual) ==  expected)
-
-# def test_preprocess_origin_cols():
-#     actual = pd.DataFrame({'Origin': [1, 2,3]})
-#     expected = pd.DataFrame({'Origin': ['India', 'USA','Germany']})    
-#     assert all(preprocess_origin_cols(actual) ==  expected)
-
-# def test_preprocess_origin_cols_no_of_unique_values():
-#     actual = pd.DataFrame({'Origin': [1,2,3,4]})
-#     actual_len = actual['Origin'].nunique()
-#     expected = preprocess_origin_cols(actual)
-#     expected_len = acc['Origin'].nunique()
-#     # with pytest.raises(AssertionError):
-#     assert actual_len == expected_len
-
-
-    # expected = pd.DataFrame({'Origin': ['India', 'USA','Germany','five']})
-    # with pytest.raises(ValueError):
-
-
-# @pytest.mark.parametrize("test_size",[0.2,-0.2,0.5,-0.5])
-# def test_strat_split(test_size):
-#     assert test_size <=0.3 and test_size >=0.1
-
-
-
-    # preprocessed_df['Origin'].nunique()    
-    
-    
